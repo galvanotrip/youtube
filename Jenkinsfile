@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-        stage('🧪 Create venv and install deps') {
+        stage('🧪 Setup virtualenv') {
             steps {
                 sh '''
                     python3 -m venv venv
@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('🚀 Run script with URL') {
+        stage('🚀 Run Downloader') {
             steps {
                 sh '''
                     . venv/bin/activate
