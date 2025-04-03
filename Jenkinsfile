@@ -2,19 +2,27 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'URL', defaultValue: '', description: 'Enter the video URL to download')
+        string(name: 'URL', defaultValue: '', description: 'Enter video URL to download')
     }
 
     stages {
-        stage('🧾 Show Parameters') {
+        stage('🧪 Create venv and install deps') {
             steps {
-                echo "Received URL: ${params.URL}"
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
 
-        stage('🚀 Run Downloader') {
+        stage('🚀 Run script with URL') {
             steps {
-                sh 'python3 main.py "$URL"'
+                sh '''
+                    . venv/bin/activate
+                    python main.py "$URL"
+                '''
             }
         }
     }
